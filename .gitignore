@@ -34,4 +34,4 @@ override.tf.json
 terraform.rc
 
 # .hcl files
-*.hcl
+#*.hcl
