@@ -15,3 +15,16 @@ variable "aws_region" {
 variable "cluster_name" {
   type = string
 }
+
+# ECS Service Name
+variable "service_name" {
+  description = "ECSサービス名"
+  type        = string
+}
+
+# Container Count
+variable "container_count" {
+  description = "タスク定義内のコンテナ数"
+  type        = number
+  default     = 1
+}

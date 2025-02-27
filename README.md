@@ -9,6 +9,7 @@
 - AWS ECS タスクの状態変更の監視
 - CloudWatch Events と EventBridge を使用したイベントの捕捉
 - Slack への通知送信
+- 複数コンテナを持つタスクの詳細情報表示
 
 ## アーキテクチャ
 
@@ -66,6 +67,8 @@ graph TD
 aws_region         = "ap-northeast-1"
 slack_webhook_url  = "https://hooks.slack.com/services/XXXXXXXXX/YYYYYYYYY/ZZZZZZZZZZZZZZZZZZZZZZZZ"
 cluster_name       = "my-ecs-cluster"
+service_name       = "my-ecs-service"
+container_count    = 2
 ```
 
 各変数の説明：
@@ -73,16 +76,26 @@ cluster_name       = "my-ecs-cluster"
 - `aws_region`: AWSリージョン（例：東京リージョン）
 - `slack_webhook_url`: Slack通知用のWebhook URL
 - `cluster_name`: 監視対象のECSクラスター名
+- `service_name`: 監視対象のECSサービス名
+- `container_count`: タスク定義内のコンテナ数（デフォルト: 1）
 
 ## 使用方法
 
-システムがデプロイされると、ECS タスクの状態が変更されるたびに自動的に Slack 通知が送信されます。
+システムがデプロイされると、指定したECSサービスのタスク状態が変更されるたびに自動的に Slack 通知が送信されます。通知には以下の情報が含まれます：
+
+- アカウントID
+- サービス名
+- アベイラビリティゾーン
+- タスクARN
+- 起動時間と停止時間
+- 停止コードと停止理由
+- 各コンテナの名前、終了コード、IPアドレス、停止理由
 
 ![Slack通知サンプル](images/image-1.png)
 
 ## カスタマイズ
 
-通知メッセージや監視するイベントタイプは、Terraform コード内で簡単にカスタマイズできます。
+通知メッセージや監視するイベントタイプは、Terraform コード内で簡単にカスタマイズできます。複数コンテナを持つタスクの場合は、`container_count` 変数を適切に設定することで、すべてのコンテナの情報が通知に含まれます。
 
 ## ライセンス
 

@@ -13,3 +13,14 @@ variable "cluster_name" {
   description = "ECSクラスター名"
   type        = string
 }
+
+variable "service_name" {
+  description = "ECSサービス名"
+  type        = string
+}
+
+variable "container_count" {
+  description = "タスク定義内のコンテナ数"
+  type        = number
+  default     = 1
+}
